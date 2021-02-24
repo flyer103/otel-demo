@@ -20,17 +20,16 @@ $ ./release/demo -h
 ## Run and exports metrics to stdout
 
 ```shell
-$ ./release/demo
+$ ./release/demo --use-stdout-exporter
 ```
 
-## Run and exports metrics to
-[AlibabaCloud SLS](https://www.aliyun.com/product/sls)
+## Run and exports metrics to [AlibabaCloud SLS](https://www.aliyun.com/product/sls)
 
 1. Download `otel-contrib-collector` from
    [opentelemetry-collector-contrib releases](https://github.com/open-telemetry/opentelemetry-collector-contrib/releases)
    and make it executable and searchable from `$PATH`.
 
-2. Prepare yaml of collector configuration:
+2. Prepare a yaml file of collector configuration:
 
 ```yaml
 receivers:
