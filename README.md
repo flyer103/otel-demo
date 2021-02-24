@@ -38,6 +38,23 @@ receivers:
       grpc:
         endpoint: "0.0.0.0:4317"
 
+processors:
+  batch:
+    send_batch_size: 10000
+    send_batch_max_size: 11000
+    timeout: 10s
+  metricstransform:
+    transforms:
+    - include: request
+      action: update
+      new_name: demo_request
+    - include: throughput
+      action: update
+      operations:
+      - action: add_label
+        new_label: my_label
+        new_value: demo
+
 exporters:
   alibabacloud_logservice/metrics:
     # LogService's Endpoint, https://www.alibabacloud.com/help/doc-detail/29008.htm
@@ -59,6 +76,7 @@ service:
   pipelines:
     metrics:
       receivers: [otlp]
+      processors: [batch, metricstransform]
       exporters: [alibabacloud_logservice/metrics, file]
 ```
 
