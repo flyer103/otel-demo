@@ -1,0 +1,28 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+
+exporters:
+  alibabacloud_logservice/metrics:
+    # LogService's Endpoint, https://www.alibabacloud.com/help/doc-detail/29008.htm
+    # for AlibabaCloud Kubernetes(or ECS), set {region-id}-intranet.log.aliyuncs.com, eg cn-hangzhou-intranet.log.aliyuncs.com;
+    #  others set {region-id}.log.aliyuncs.com, eg cn-hangzhou.log.aliyuncs.com
+    endpoint: "cn-hangzhou.log.aliyuncs.com"
+    # LogService's Project Name
+    project: ""
+    # LogService's Logstore Name
+    logstore: ""
+    # AlibabaCloud access key id
+    access_key_id: ""
+    # AlibabaCloud access key secret
+    access_key_secret: ""
+  file:
+    path: ./metrics.json
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      exporters: [alibabacloud_logservice/metrics, file]
